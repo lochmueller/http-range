@@ -7,6 +7,7 @@ namespace Lochmueller\HttpRange;
 use GuzzleHttp\Psr7\HttpFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Lochmueller\HttpRange\Resource\ResourceInformationInterface;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Nyholm\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
@@ -48,7 +49,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
                     ->withHeader('Content-Length', $rangeValue->getLength() - $rangeValue->getStart())
                     ->withBody(new Stream($this->resource->getResource($rangeValue->getStart(), $rangeValue->getLength())));
             } elseif ($ranges->count() > 1) {
-                $builder = new MultipartStreamBuilder(new HttpFactory());
+                $builder = new MultipartStreamBuilder(new Psr17Factory());
 
                 foreach ($ranges as $rangeValue) {
                     /** @var UnitRangeInterface $rangeValue */
