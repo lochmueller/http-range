@@ -1,33 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lochmueller\HttpRange\Tests;
 
-use Lochmueller\HttpRange\Resource\LocalResourceResource;
-use Lochmueller\HttpRange\RangeRequestHandler;
+use Lochmueller\HttpRange\HttpRangeRequestHandler;
 use Nyholm\Psr7\ServerRequest;
-use PHPUnit\Framework\TestCase;
 
-class RangeRequestHandlerTest extends TestCase
+class HttpRangeRequestHandlerTest extends AbstractUnitTest
 {
-    public function testInvalidFilenameRequest()
-    {
-        $this->expectException(\Lochmueller\HttpRange\Resource\Exception\LocalFileNotFoundException::class);
-
-        $request = new ServerRequest('GET', '/');
-
-        $filePath = __DIR__ . '/fixtures/222-200x300-not-exists.jpg';
-
-        $handler = new RangeRequestHandler(new LocalResourceResource($filePath));
-
-        $handler->handle($request);
-    }
-
-    public function testHeadRequestWithValidRange()
+    public function testHeadRequestWithValidRange(): void
     {
         $request = new ServerRequest('HEAD', '/');
 
-        $filePath = __DIR__ . '/fixtures/222-200x300.jpg';
-        $handler = new RangeRequestHandler(new LocalResourceResource($filePath));
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
 
         $response = $handler->handle($request);
 
@@ -35,12 +21,11 @@ class RangeRequestHandlerTest extends TestCase
         static::assertTrue($response->hasHeader('Accept-Ranges'));
     }
 
-    public function testGetRequestWithoutRangeInformation()
+    public function testGetRequestWithoutRangeInformation(): void
     {
         $request = new ServerRequest('GET', '/');
 
-        $filePath = __DIR__ . '/fixtures/222-200x300.jpg';
-        $handler = new RangeRequestHandler(new LocalResourceResource($filePath));
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
 
         $response = $handler->handle($request);
 
@@ -48,14 +33,13 @@ class RangeRequestHandlerTest extends TestCase
         static::assertTrue($response->hasHeader('Accept-Ranges'));
     }
 
-    public function testGetRequestWithRangeInformation()
+    public function testGetRequestWithRangeInformation(): void
     {
         $request = new ServerRequest('GET', '/', [
             'Range' => 'bytes=0-199',
         ]);
 
-        $filePath = __DIR__ . '/fixtures/222-200x300.jpg';
-        $handler = new RangeRequestHandler(new LocalResourceResource($filePath));
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
 
         $response = $handler->handle($request);
 
@@ -65,14 +49,13 @@ class RangeRequestHandlerTest extends TestCase
         static::assertEquals(200, $response->getHeaderLine('Content-Length'));
     }
 
-    public function testGetRequestWithMultiRangeInformation()
+    public function testGetRequestWithMultiRangeInformation(): void
     {
         $request = new ServerRequest('GET', '/', [
             'Range' => 'bytes=0-199,210-250',
         ]);
 
-        $filePath = __DIR__ . '/fixtures/222-200x300.jpg';
-        $handler = new RangeRequestHandler(new LocalResourceResource($filePath));
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
 
         $response = $handler->handle($request);
 
@@ -81,5 +64,4 @@ class RangeRequestHandlerTest extends TestCase
         static::assertTrue($response->hasHeader('Content-Length'));
         static::assertEquals(11092, $response->getHeaderLine('Content-Length'));
     }
-
 }
