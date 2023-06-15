@@ -20,8 +20,8 @@ class HttpRangeMiddleware implements MiddlewareInterface
         $handler = new HttpRangeRequestHandler($streamResource);
         $internalResponse = $handler->handle($request);
 
-        foreach ($internalResponse->getHeaders() as $header) {
-            // var_dump($header);
+        foreach ($internalResponse->getHeaders() as $key => $value) {
+            $response = $response->withHeader($key, $value);
         }
 
         return $response->withBody($internalResponse->getBody());
