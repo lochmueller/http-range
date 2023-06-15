@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange;
 
-use GuzzleHttp\Psr7\HttpFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Lochmueller\HttpRange\Resource\ResourceInformationInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;

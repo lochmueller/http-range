@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff3b8d406ffeda984da1d43d12ea51b3",
+    "content-hash": "11438c57fe397e02b3f31f93349ebefc",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -763,7 +763,7 @@
         },
         {
             "name": "ramsey/http-range",
-            "version": "dev-main",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/http-range.git",
@@ -787,7 +787,6 @@
             "suggest": {
                 "ext-ctype": "Support for ctype_* functions."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "captainhook": {
@@ -4538,9 +4537,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "ramsey/http-range": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
