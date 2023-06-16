@@ -64,4 +64,20 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
         static::assertTrue($response->hasHeader('Content-Length'));
         static::assertEquals(11092, $response->getHeaderLine('Content-Length'));
     }
+
+    public function testGetRequestWithSingleRangeStartInformation(): void
+    {
+        $request = new ServerRequest('GET', '/', [
+            'Range' => 'bytes=2000-',
+        ]);
+
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
+
+        $response = $handler->handle($request);
+
+        static::assertEquals(206, $response->getStatusCode());
+        static::assertTrue($response->hasHeader('Accept-Ranges'));
+        static::assertTrue($response->hasHeader('Content-Length'));
+        static::assertEquals(9092, $response->getHeaderLine('Content-Length'));
+    }
 }

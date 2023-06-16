@@ -30,26 +30,26 @@ class LocalFileResource implements ResourceInformationInterface
         return filesize($this->absoluteFilePath);
     }
 
-    public function getContent(int $start, int $end): string
+    public function getContent(int $start, int $length): string
     {
         return file_get_contents(
             filename: $this->absoluteFilePath,
             offset: $start,
-            length: $end
+            length: $length
         );
     }
 
-    public function getResource(int $start, int $end)
+    public function getResource(int $start, int $length)
     {
         $stream = fopen('php://memory', 'r+');
-        fwrite($stream, $this->getContent($start, $end));
+        fwrite($stream, $this->getContent($start, $length));
         rewind($stream);
 
         return $stream;
     }
 
-    public function getStream(int $start, int $end): StreamInterface
+    public function getStream(int $start, int $length): StreamInterface
     {
-        return new Stream($this->getResource($start, $end));
+        return new Stream($this->getResource($start, $length));
     }
 }

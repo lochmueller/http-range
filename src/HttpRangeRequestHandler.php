@@ -45,7 +45,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
                 $rangeValue = $ranges->first();
 
                 return $response->withHeader('Content-Range', 'bytes '.sprintf('%s-%s/%s', $rangeValue->getStart(), $rangeValue->getLength(), $this->resource->getSize()))
-                    ->withHeader('Content-Length', $rangeValue->getLength() - $rangeValue->getStart())
+                    ->withHeader('Content-Length', $rangeValue->getLength())
                     ->withBody(new Stream($this->resource->getResource($rangeValue->getStart(), $rangeValue->getLength())));
             } elseif ($ranges->count() > 1) {
                 $builder = new MultipartStreamBuilder(new Psr17Factory());

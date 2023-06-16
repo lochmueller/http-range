@@ -10,9 +10,9 @@ interface ResourceInformationInterface
 {
     public function getSize(): int;
 
-    public function getContent(int $start, int $end): string;
+    public function getContent(int $start, int $length): string;
 
-    public function getResource(int $start, int $end);
+    public function getResource(int $start, int $length);
 
-    public function getStream(int $start, int $end): StreamInterface;
+    public function getStream(int $start, int $length): StreamInterface;
 }
