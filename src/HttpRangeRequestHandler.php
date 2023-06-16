@@ -33,6 +33,10 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
             return $response;
         }
 
+        if ('GET' !== $request->getMethod()) {
+            return $response->withoutHeader('Accept-Ranges');
+        }
+
         $range = new Range($request, $this->resource->getSize());
 
         try {

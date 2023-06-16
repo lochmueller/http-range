@@ -2,14 +2,24 @@
 
 declare(strict_types=1);
 
+namespace Lochmueller\HttpRange\Resource;
+
+function is_readable($filename)
+{
+    return \Lochmueller\HttpRange\Tests\Resource\LocalFileResourceTest::$isReadable;
+}
+
 namespace Lochmueller\HttpRange\Tests\Resource;
 
 use Lochmueller\HttpRange\Resource\Exception\LocalFileNotFoundException;
+use Lochmueller\HttpRange\Resource\Exception\LocalFileNotReadableException;
 use Lochmueller\HttpRange\Resource\LocalFileResource;
 use Lochmueller\HttpRange\Tests\AbstractUnitTest;
 
 class LocalFileResourceTest extends AbstractUnitTest
 {
+    public static $isReadable = true;
+
     public function testInvalidFilename(): void
     {
         $this->expectException(LocalFileNotFoundException::class);
@@ -24,5 +34,22 @@ class LocalFileResourceTest extends AbstractUnitTest
         $file = new LocalFileResource($filePath);
 
         self::assertEquals(11092, $file->getSize());
+    }
+
+    public function testValidSubstream(): void
+    {
+        $filePath = __DIR__.'/../fixtures/test-text.txt';
+        $file = new LocalFileResource($filePath);
+
+        self::assertEquals('Ich bin', $file->getStream(0, 7)->getContents());
+    }
+
+    public function testUnreadbaleFile(): void
+    {
+        self::$isReadable = false;
+        $this->expectException(LocalFileNotReadableException::class);
+
+        $filePath = __DIR__.'/../fixtures/test-text.txt';
+        $file = new LocalFileResource($filePath);
     }
 }

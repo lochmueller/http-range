@@ -31,7 +31,7 @@
     "friendsofphp/php-cs-fixer": "^3.17"
   },
   "scripts": {
-    "test": "phpunit --configuration=config/phpunit.xml.dist",
+    "test": "XDEBUG_MODE=coverage phpunit --coverage-text --coverage-html=var/phpunit/ --configuration=config/phpunit.xml.dist",
     "code-fix": "php-cs-fixer fix --config=config/.php-cs-fixer.dist.php"
   },
   "config": {
