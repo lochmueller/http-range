@@ -4,12 +4,17 @@ Use PSR-7 messages and a PSR-15 handler/middlware to handle HTTP Range request a
 
 ## Usage
 
-    $handler = new \Lochmueller\HttpRange\HttpRangeRequestHandler(new \Lochmueller\HttpRange\Resource\LocalFileResource($filePath));
-    $response = $handler->handle($serverRequest);
-    // Use response header and content
-    
-    // or via middlware - HttpRangeMiddleware::class
-    // response is used for the range split
+```php
+use Lochmueller\HttpRange\HttpRangeRequestHandler;
+use Lochmueller\HttpRange\Resource\LocalFileResource;
+
+$handler = new HttpRangeRequestHandler(new LocalFileResource($filePath));
+$response = $handler->handle($serverRequest);
+// Use response header and content
+
+// or via middleware - HttpRangeMiddleware::class
+// response is used for the range split
+```
 
 ## Tests
 
