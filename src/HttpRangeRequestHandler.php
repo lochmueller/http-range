@@ -8,7 +8,6 @@ use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Lochmueller\HttpRange\Resource\ResourceInformationInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
-use Nyholm\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -46,7 +45,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
 
                 return $response->withHeader('Content-Range', 'bytes '.sprintf('%s-%s/%s', $rangeValue->getStart(), $rangeValue->getLength(), $this->resource->getSize()))
                     ->withHeader('Content-Length', $rangeValue->getLength())
-                    ->withBody(new Stream($this->resource->getResource($rangeValue->getStart(), $rangeValue->getLength())));
+                    ->withBody($this->resource->getStream($rangeValue->getStart(), $rangeValue->getLength()));
             } elseif ($ranges->count() > 1) {
                 $builder = new MultipartStreamBuilder(new Psr17Factory());
 
@@ -71,6 +70,6 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
             // No range deliver complete file
         }
 
-        return $response->withBody(new Stream($this->resource->getResource(0, $this->resource->getSize())));
+        return $response->withBody($this->resource->getStream(0, $this->resource->getSize()));
     }
 }

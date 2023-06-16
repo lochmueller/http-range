@@ -25,7 +25,7 @@ class LocalFileResource implements ResourceInformationInterface
         }
     }
 
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return filesize($this->absoluteFilePath);
     }
@@ -39,17 +39,12 @@ class LocalFileResource implements ResourceInformationInterface
         );
     }
 
-    public function getResource(int $start, int $length)
-    {
-        $stream = fopen('php://memory', 'r+');
-        fwrite($stream, $this->getContent($start, $length));
-        rewind($stream);
-
-        return $stream;
-    }
-
     public function getStream(int $start, int $length): StreamInterface
     {
-        return new Stream($this->getResource($start, $length));
+        $resource = fopen('php://memory', 'r+');
+        fwrite($resource, $this->getContent($start, $length));
+        rewind($resource);
+
+        return new Stream($resource);
     }
 }
