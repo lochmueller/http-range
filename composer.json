@@ -1,5 +1,6 @@
 {
   "name": "lochmueller/http-range",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Lochmueller\\HttpRange\\": "src/"
