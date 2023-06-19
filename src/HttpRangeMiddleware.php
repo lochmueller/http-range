@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange;
 
+use Lochmueller\HttpRange\Header\ETagHeader;
+use Lochmueller\HttpRange\Header\IfRangeHeader;
+use Lochmueller\HttpRange\Header\LastModifiedHeader;
+use Lochmueller\HttpRange\Header\RangeHeader;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,6 +19,10 @@ class HttpRangeMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
+        if ($request->hasHeader(IfRangeHeader::NAME) && !$this->isValidIfRangeCondition($request, $response)) {
+            $request->withoutHeader(RangeHeader::NAME);
+        }
+
         $handler = new HttpRangeRequestHandler($response->getBody());
         $internalResponse = $handler->handle($request);
 
@@ -23,5 +31,27 @@ class HttpRangeMiddleware implements MiddlewareInterface
         }
 
         return $response->withBody($internalResponse->getBody());
+    }
+
+    protected function isValidIfRangeCondition(ServerRequestInterface $request, ResponseInterface $response): bool
+    {
+        $ifRangeHeader = new IfRangeHeader($request->getHeaderLine(IfRangeHeader::NAME));
+        if (!$ifRangeHeader->valid()) {
+            return false;
+        }
+        $result = $ifRangeHeader->get();
+
+        if ($result instanceof ETagHeader) {
+            return (new ETagHeader($response->getHeaderLine()))->get() === $result->get();
+        } elseif ($result instanceof LastModifiedHeader) {
+            $responseHeader = new LastModifiedHeader($response->getHeaderLine());
+            if (!$responseHeader->valid()) {
+                return false;
+            }
+
+            return $responseHeader->get()->getTimestamp() === $result->get()->getTimestamp();
+        }
+
+        return false;
     }
 }
