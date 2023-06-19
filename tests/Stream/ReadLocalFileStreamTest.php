@@ -12,6 +12,7 @@ class ReadLocalFileStreamTest extends AbstractUnitTest
     {
         $this->markTestSkipped('Skip, because this test output content');
 
+        /** @phpstan-ignore-next-line */
         $localFile = $this->getFixtureText();
 
         // First 10 chars

@@ -1,5 +1,11 @@
 # lochmueller/http-range
 
+[![Latest Stable Version](https://poser.pugx.org/lochmueller/http-range/v/stable)](https://packagist.org/packages/lochmueller/http-range)
+[![Total Downloads](https://poser.pugx.org/lochmueller/http-range/downloads)](https://packagist.org/packages/lochmueller/http-range)
+[![License](https://poser.pugx.org/lochmueller/http-range/license)](https://packagist.org/packages/lochmueller/http-range)
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/lochmueller/http-range.svg)](https://isitmaintained.com/project/lochmueller/http-range "Percentage of issues still open")
+[![PHPStan](https://img.shields.io/badge/PHPStan-level%205-brightgreen.svg?style=flat)](https://github.com/lochmueller/http-range/actions)
+
 Use PSR-7 messages and a PSR-15 handler/middlware to handle HTTP Range request and trigger valid partial download for streams/files. Hande multiple ranges and check different env requirements.
 
 ## Usage

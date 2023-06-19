@@ -52,6 +52,8 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
     public function testGetRequestWithMultiRangeInformation(): void
     {
         $this->markTestSkipped('Test Multi');
+
+        /** @phpstan-ignore-next-line */
         $request = new ServerRequest('GET', '/', [
             'Range' => 'bytes=0-199,210-250',
         ]);

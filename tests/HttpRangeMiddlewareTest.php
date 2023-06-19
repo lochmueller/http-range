@@ -43,6 +43,7 @@ class HttpRangeMiddlewareTest extends AbstractUnitTest
     {
         $this->markTestSkipped('Skip, because this test output content');
 
+        /** @phpstan-ignore-next-line */
         $request = new ServerRequest('GET', '/', [
             'Range' => 'bytes=0-104857600',
         ]);

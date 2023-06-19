@@ -27,7 +27,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
         $response = new Response();
         $response = $response
             ->withStatus(200)
-            ->withHeader('Content-Length', $this->stream->getSize())
+            ->withHeader('Content-Length', (string) $this->stream->getSize())
             ->withHeader('Accept-Ranges', 'bytes');
 
         if ('HEAD' === $request->getMethod()) {

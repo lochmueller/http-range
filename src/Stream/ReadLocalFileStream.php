@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Stream;
 
+use Lochmueller\HttpRange\Stream\Exception\LocalFileNotReadableException;
 use Lochmueller\HttpRange\Stream\Exception\StreamNotWritableException;
 use Psr\Http\Message\StreamInterface;
 
@@ -17,16 +18,18 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
 
     public function __toString(): string
     {
-        return file_get_contents($this->absoluteFileName);
+        return (string) file_get_contents($this->absoluteFileName);
     }
 
     public function close(): void
     {
     }
 
-    public function detach(): void
+    public function detach()
     {
         $this->absoluteFileName = '';
+
+        return null;
     }
 
     public function getSize(): int
@@ -70,7 +73,7 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
         return false;
     }
 
-    public function write(string $string): void
+    public function write(string $string): int
     {
         throw new StreamNotWritableException();
     }
@@ -80,9 +83,12 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
         return is_readable($this->absoluteFileName);
     }
 
+    /**
+     * @param int<0, max> $length
+     */
     public function read(int $length): string
     {
-        return file_get_contents($this->absoluteFileName, offset: $this->filePointer, length: $length);
+        return (string) file_get_contents($this->absoluteFileName, offset: $this->filePointer, length: $length);
     }
 
     public function getContents(): string
@@ -90,11 +96,16 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
         return (string) $this;
     }
 
-    public function getMetadata(string $key = null): array
+    public function getMetadata(string $key = null)
     {
-        return [];
+        return null;
     }
 
+    /**
+     * @param int<0, max>|null $length
+     *
+     * @throws LocalFileNotReadableException
+     */
     public function emit(int $length = null): void
     {
         if (null === $length) {
@@ -103,6 +114,9 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
 
         $start = $this->tell();
         $fp = fopen($this->absoluteFileName, 'r');
+        if (false === $fp) {
+            throw new LocalFileNotReadableException();
+        }
         $end = $start + $length;
         fseek($fp, $start);
 
@@ -112,6 +126,7 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
             if ($p + $buffer > $end) {
                 // In case we are only outputting a chunk, make sure we do not
                 // read past the length
+                /** @var int<0, max> $buffer */
                 $buffer = $end - $p + 1;
             }
             echo fread($fp, $buffer);

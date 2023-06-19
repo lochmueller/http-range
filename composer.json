@@ -28,12 +28,14 @@
   "require-dev": {
     "nyholm/psr7": "^1.8",
     "phpunit/phpunit": "^10.2",
-    "friendsofphp/php-cs-fixer": "^3.17"
+    "friendsofphp/php-cs-fixer": "^3.17",
+    "phpstan/phpstan": "^1.10"
   },
   "scripts": {
     "test": "XDEBUG_MODE=coverage phpunit --coverage-text --coverage-html=var/phpunit/ --configuration=config/phpunit.xml.dist",
     "test-large": "@test --group=large",
-    "code-fix": "php-cs-fixer fix --config=config/.php-cs-fixer.dist.php"
+    "code-fix": "php-cs-fixer fix --config=config/.php-cs-fixer.dist.php",
+    "code-check": "phpstan analyse src tests --level=7"
   },
   "config": {
     "allow-plugins": {

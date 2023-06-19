@@ -34,8 +34,9 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
     {
     }
 
-    public function detach(): void
+    public function detach()
     {
+        return null;
     }
 
     public function getSize(): int
@@ -73,7 +74,7 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         return false;
     }
 
-    public function write(string $string): void
+    public function write(string $string): int
     {
         throw new StreamNotWritableException();
     }
@@ -97,9 +98,9 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         return (string) $this;
     }
 
-    public function getMetadata(string $key = null): array
+    public function getMetadata(string $key = null)
     {
-        return [];
+        return null;
     }
 
     protected function maxLength(): int
@@ -123,10 +124,13 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
 
         $this->rewind();
         for ($i = 0; !$this->eof(); ++$i) {
-            echo $this->emit($selectionBlocks[$i]);
+            $this->emit($selectionBlocks[$i]);
         }
     }
 
+    /**
+     * @return int[]
+     */
     protected function getSelectionBlocks(int $length, int $blockSize): array
     {
         $completeBlocks = $length / $blockSize;
