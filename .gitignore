@@ -1,4 +1,5 @@
 /.idea/
 /vendor/
 /var/
+/tests/fixtures/hugeVideo.mp4
 .DS_Store

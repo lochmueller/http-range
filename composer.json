@@ -32,6 +32,7 @@
   },
   "scripts": {
     "test": "XDEBUG_MODE=coverage phpunit --coverage-text --coverage-html=var/phpunit/ --configuration=config/phpunit.xml.dist",
+    "test-large": "@test --group=large",
     "code-fix": "php-cs-fixer fix --config=config/.php-cs-fixer.dist.php"
   },
   "config": {

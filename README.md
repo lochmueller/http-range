@@ -6,9 +6,9 @@ Use PSR-7 messages and a PSR-15 handler/middlware to handle HTTP Range request a
 
 ```php
 use Lochmueller\HttpRange\HttpRangeRequestHandler;
-use Lochmueller\HttpRange\Resource\LocalFileResource;
+use Lochmueller\HttpRange\Stream\ReadLocalFileStream;
 
-$handler = new HttpRangeRequestHandler(new LocalFileResource($filePath));
+$handler = new HttpRangeRequestHandler(new ReadLocalFileStream($filePath));
 $response = $handler->handle($serverRequest);
 // Use response header and content
 

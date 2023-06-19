@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange;
 
-use Lochmueller\HttpRange\Resource\StreamResource;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -16,8 +15,7 @@ class HttpRangeMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
-        $streamResource = new StreamResource($response->getBody());
-        $handler = new HttpRangeRequestHandler($streamResource);
+        $handler = new HttpRangeRequestHandler($response->getBody());
         $internalResponse = $handler->handle($request);
 
         foreach ($internalResponse->getHeaders() as $key => $value) {

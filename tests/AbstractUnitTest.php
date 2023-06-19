@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Tests;
 
-use Lochmueller\HttpRange\Resource\LocalFileResource;
-use Lochmueller\HttpRange\Resource\ResourceInformationInterface;
+use Lochmueller\HttpRange\Stream\ReadLocalFileStream;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractUnitTest extends TestCase
 {
-    protected function getFixtureImage(): ResourceInformationInterface
+    protected function getFixtureImage(): ReadLocalFileStream
     {
-        $filePath = __DIR__.'/fixtures/222-200x300.jpg';
-
-        return new LocalFileResource($filePath);
+        return new ReadLocalFileStream($this->getAbsoluteFixturesPath().'222-200x300.jpg');
     }
 
-    protected function getFixtureText(): ResourceInformationInterface
+    protected function getFixtureText(): ReadLocalFileStream
     {
-        $filePath = __DIR__.'/fixtures/test-text.txt';
+        return new ReadLocalFileStream($this->getAbsoluteFixturesPath().'test-text.txt');
+    }
 
-        return new LocalFileResource($filePath);
+    protected function getFixtureVideo(): ReadLocalFileStream
+    {
+        return new ReadLocalFileStream($this->getAbsoluteFixturesPath().'hugeVideo.mp4');
+    }
+
+    private function getAbsoluteFixturesPath(): string
+    {
+        return __DIR__.'/fixtures/';
     }
 }
