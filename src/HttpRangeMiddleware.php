@@ -42,9 +42,9 @@ class HttpRangeMiddleware implements MiddlewareInterface
         $result = $ifRangeHeader->get();
 
         if ($result instanceof ETagHeader) {
-            return (new ETagHeader($response->getHeaderLine()))->get() === $result->get();
+            return (new ETagHeader($response->getHeaderLine(ETagHeader::NAME)))->get() === $result->get();
         } elseif ($result instanceof LastModifiedHeader) {
-            $responseHeader = new LastModifiedHeader($response->getHeaderLine());
+            $responseHeader = new LastModifiedHeader($response->getHeaderLine(LastModifiedHeader::NAME));
             if (!$responseHeader->valid()) {
                 return false;
             }

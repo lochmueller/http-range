@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Header;
 
+use Psr\Http\Message\RequestInterface;
+
 class RangeHeader implements HeaderInterace
 {
     public const NAME = 'Range';
@@ -14,11 +16,12 @@ class RangeHeader implements HeaderInterace
 
     public function valid(): bool
     {
-        // Not implement. Foreign lib ist used.
+        // Not implement.
+        // Foreign lib is used.
         return false;
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->content;
     }

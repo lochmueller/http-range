@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Stream;
 
-use Lochmueller\HttpRange\Stream\Exception\NoEmitSeekableStreamException;
+use Lochmueller\HttpRange\Service\ByteService;
 use Lochmueller\HttpRange\Stream\Exception\StreamNotWritableException;
 use Psr\Http\Message\StreamInterface;
 
@@ -110,38 +110,22 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
 
     public function emit(int $length = null): void
     {
-        if (!$this->stream instanceof EmitStreamInterface || !$this->stream->isSeekable()) {
-            throw new NoEmitSeekableStreamException();
+        if ($this->stream instanceof EmitStreamInterface) {
+            $this->stream->emit($length);
+
+            return;
         }
 
         if (null === $length) {
             $length = $this->getSize() - $this->tell();
         }
 
-        $kbBlock = 265 * 1024;
-
-        $selectionBlocks = $this->getSelectionBlocks($length, $kbBlock);
+        $byteService = new ByteService();
+        $selectionBlocks = $byteService->chuckBytesInBlocks($length);
 
         $this->rewind();
         for ($i = 0; !$this->eof(); ++$i) {
-            $this->emit($selectionBlocks[$i]);
+            echo $this->read($selectionBlocks[$i]);
         }
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getSelectionBlocks(int $length, int $blockSize): array
-    {
-        $completeBlocks = $length / $blockSize;
-
-        $result = array_fill(0, (int) floor($completeBlocks), $blockSize);
-
-        $rest = $length - array_sum($result);
-        if ($rest > 0) {
-            $result[] = $rest;
-        }
-
-        return $result;
     }
 }

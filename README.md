@@ -30,5 +30,4 @@ Run `composer test` to execute the current tests suite or run `composer code-fix
 
 - https://github.com/ramsey/http-range/issues/7
 - Mixed dependencies in composer
-- Support for https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Range
 - https://www.rfc-editor.org/rfc/rfc9110#field.range
