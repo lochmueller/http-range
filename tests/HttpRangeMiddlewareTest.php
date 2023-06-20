@@ -6,6 +6,7 @@ namespace Lochmueller\HttpRange\Tests;
 
 use Lochmueller\HttpRange\HttpRangeMiddleware;
 use Lochmueller\HttpRange\Stream\EmitStreamInterface;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Nyholm\Psr7\ServerRequest;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -27,7 +28,7 @@ class HttpRangeMiddlewareTest extends AbstractUnitTest
                 return $response->withBody($this->getFixtureText());
             });
 
-        $middleware = new HttpRangeMiddleware();
+        $middleware = new HttpRangeMiddleware(new Psr17Factory());
         $result = $middleware->process($request, $handler);
 
         self::assertTrue($result->hasHeader('Content-Range'));
@@ -49,7 +50,7 @@ class HttpRangeMiddlewareTest extends AbstractUnitTest
                 return $response->withBody($this->getFixtureText());
             });
 
-        $middleware = new HttpRangeMiddleware();
+        $middleware = new HttpRangeMiddleware(new Psr17Factory());
         $result = $middleware->process($request, $handler);
 
         self::assertTrue($result->hasHeader('Content-Range'));
@@ -79,7 +80,7 @@ class HttpRangeMiddlewareTest extends AbstractUnitTest
                 return $response->withBody($this->getFixtureVideo());
             });
 
-        $middleware = new HttpRangeMiddleware();
+        $middleware = new HttpRangeMiddleware(new Psr17Factory());
         $result = $middleware->process($request, $handler);
 
         // Call Body rendering

@@ -8,6 +8,7 @@ use Lochmueller\HttpRange\Header\ETagHeader;
 use Lochmueller\HttpRange\Header\IfRangeHeader;
 use Lochmueller\HttpRange\Header\LastModifiedHeader;
 use Lochmueller\HttpRange\Header\RangeHeader;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,6 +16,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class HttpRangeMiddleware implements MiddlewareInterface
 {
+    public function __construct(
+        protected ResponseFactoryInterface $responseFactory
+    ) {
+    }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
@@ -23,7 +29,7 @@ class HttpRangeMiddleware implements MiddlewareInterface
             $request->withoutHeader(RangeHeader::NAME);
         }
 
-        $handler = new HttpRangeRequestHandler($response->getBody());
+        $handler = new HttpRangeRequestHandler($response->getBody(), $this->responseFactory);
         $internalResponse = $handler->handle($request);
 
         foreach ($internalResponse->getHeaders() as $key => $value) {

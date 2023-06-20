@@ -6,7 +6,7 @@
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/lochmueller/http-range.svg)](https://isitmaintained.com/project/lochmueller/http-range "Percentage of issues still open")
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%205-brightgreen.svg?style=flat)](https://github.com/lochmueller/http-range/actions)
 
-Use PSR-7 messages and a PSR-15 handler/middlware to handle HTTP Range request and trigger valid partial download for streams/files. Hande multiple ranges and check different env requirements.
+Use PSR-7 messages and a PSR-15 handler/middleware to handle HTTP Range request and trigger valid partial download for streams/files. Hande multiple ranges and check different env requirements.
 
 ## Usage
 
@@ -29,5 +29,4 @@ Run `composer test` to execute the current tests suite or run `composer code-fix
 ## Problems
 
 - https://github.com/ramsey/http-range/issues/7
-- Mixed dependencies in composer
 - https://www.rfc-editor.org/rfc/rfc9110#field.range

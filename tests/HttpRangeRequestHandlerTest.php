@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lochmueller\HttpRange\Tests;
 
 use Lochmueller\HttpRange\HttpRangeRequestHandler;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\ServerRequest;
 
 class HttpRangeRequestHandlerTest extends AbstractUnitTest
@@ -13,7 +14,7 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
     {
         $request = new ServerRequest('HEAD', '/');
 
-        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage(), new Psr17Factory());
 
         $response = $handler->handle($request);
 
@@ -25,7 +26,7 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
     {
         $request = new ServerRequest('GET', '/');
 
-        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage(), new Psr17Factory());
 
         $response = $handler->handle($request);
 
@@ -39,7 +40,7 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
             'Range' => 'bytes=0-199',
         ]);
 
-        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage(), new Psr17Factory());
 
         $response = $handler->handle($request);
 
@@ -55,7 +56,7 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
             'Range' => 'bytes=0-9,15-19',
         ]);
 
-        $handler = new HttpRangeRequestHandler($this->getFixtureText());
+        $handler = new HttpRangeRequestHandler($this->getFixtureText(), new Psr17Factory());
 
         $response = $handler->handle($request);
 
@@ -71,7 +72,7 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
             'Range' => 'bytes=2000-',
         ]);
 
-        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
+        $handler = new HttpRangeRequestHandler($this->getFixtureImage(), new Psr17Factory());
 
         $response = $handler->handle($request);
 

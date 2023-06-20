@@ -8,23 +8,24 @@ use Lochmueller\HttpRange\Header\ContentLengthHeader;
 use Lochmueller\HttpRange\Header\RangeHeader;
 use Lochmueller\HttpRange\Stream\MultipartStream;
 use Lochmueller\HttpRange\Stream\RangeWrapperStream;
-use Nyholm\Psr7\Response;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Ramsey\Http\Range\Range;
 use Ramsey\Http\Range\Unit\UnitRangeInterface;
 
 class HttpRangeRequestHandler implements RequestHandlerInterface
 {
-    public function __construct(protected StreamInterface $stream)
-    {
+    public function __construct(
+        protected StreamInterface $stream,
+        protected ResponseFactoryInterface $responseFactory,
+    ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = new Response();
+        $response = $this->responseFactory->createResponse(200);
         $response = $response
             ->withStatus(200)
             ->withHeader(ContentLengthHeader::NAME, (string) $this->stream->getSize())

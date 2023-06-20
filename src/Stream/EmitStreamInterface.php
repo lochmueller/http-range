@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Stream;
 
-interface EmitStreamInterface
+use Psr\Http\Message\StreamInterface;
+
+interface EmitStreamInterface extends StreamInterface
 {
     /**
      * Same as read, but the content is emitted to the client, to reduce the memory

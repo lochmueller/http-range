@@ -1,5 +1,6 @@
 {
   "name": "lochmueller/http-range",
+  "description": "Use PSR-7 messages and a PSR-15 handler/middleware to handle HTTP Range request and trigger valid partial download for streams/files. Hande multiple ranges and check different env requirements.",
   "license": "MIT",
   "autoload": {
     "psr-4": {
@@ -20,9 +21,9 @@
   "require": {
     "php": "^8.1",
     "psr/http-server-handler": "^1.0",
-    "psr/http-factory-implementation": "*",
     "psr/http-server-middleware": "^1.0",
-    "php-http/curl-client": "^2.3",
+    "psr/http-factory": "^1.0",
+    "psr/http-factory-implementation": "*",
     "ramsey/http-range": "^1.1"
   },
   "require-dev": {
