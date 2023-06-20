@@ -128,4 +128,9 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
             echo $this->read($selectionBlocks[$i]);
         }
     }
+
+    public function getContentRangeHeader(): string
+    {
+        return 'bytes '.sprintf('%s-%s/%s', $this->start, $this->start + $this->length, $this->stream->getSize());
+    }
 }

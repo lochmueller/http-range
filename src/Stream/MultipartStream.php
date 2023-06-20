@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Stream;
 
+use Lochmueller\HttpRange\Header\ContentLengthHeader;
 use Lochmueller\HttpRange\Stream\Exception\StreamNotWritableException;
 use Psr\Http\Message\StreamInterface;
 
@@ -25,9 +26,9 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
      */
     public function addStream(StreamInterface $stream, array $headers = []): void
     {
-        if (!$this->hasHeader($headers, 'content-length')) {
+        if (!$this->hasHeader($headers, ContentLengthHeader::NAME)) {
             if ($length = $stream->getSize()) {
-                $headers['Content-Length'] = (string) $length;
+                $headers[ContentLengthHeader::NAME] = (string) $length;
             }
         }
 
