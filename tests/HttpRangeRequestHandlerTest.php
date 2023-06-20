@@ -51,21 +51,18 @@ class HttpRangeRequestHandlerTest extends AbstractUnitTest
 
     public function testGetRequestWithMultiRangeInformation(): void
     {
-        $this->markTestSkipped('Test Multi');
-
-        /** @phpstan-ignore-next-line */
         $request = new ServerRequest('GET', '/', [
-            'Range' => 'bytes=0-199,210-250',
+            'Range' => 'bytes=0-9,15-19',
         ]);
 
-        $handler = new HttpRangeRequestHandler($this->getFixtureImage());
+        $handler = new HttpRangeRequestHandler($this->getFixtureText());
 
         $response = $handler->handle($request);
 
         static::assertEquals(206, $response->getStatusCode());
         static::assertTrue($response->hasHeader('Accept-Ranges'));
         static::assertTrue($response->hasHeader('Content-Length'));
-        static::assertEquals(11092, $response->getHeaderLine('Content-Length'));
+        static::assertEquals(109, $response->getHeaderLine('Content-Length'));
     }
 
     public function testGetRequestWithSingleRangeStartInformation(): void

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange\Header;
 
-use Psr\Http\Message\RequestInterface;
-
 class RangeHeader implements HeaderInterace
 {
     public const NAME = 'Range';

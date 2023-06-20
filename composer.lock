@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "394d1b849b51002af37719c07e14aead",
+    "content-hash": "f06d0b5a9464b82bc10fd73759992632",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -138,16 +138,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.18.1",
+            "version": "1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "f258b3a1d16acb7b21f3b42d7a2494a733365237"
+                "reference": "1856a119a0b0ba8da8b5c33c080aa7af8fac25b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/f258b3a1d16acb7b21f3b42d7a2494a733365237",
-                "reference": "f258b3a1d16acb7b21f3b42d7a2494a733365237",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/1856a119a0b0ba8da8b5c33c080aa7af8fac25b4",
+                "reference": "1856a119a0b0ba8da8b5c33c080aa7af8fac25b4",
                 "shasum": ""
             },
             "require": {
@@ -210,9 +210,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.18.1"
+                "source": "https://github.com/php-http/discovery/tree/1.19.0"
             },
-            "time": "2023-05-17T08:53:10+00:00"
+            "time": "2023-06-19T08:45:36+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -339,62 +339,6 @@
                 "source": "https://github.com/php-http/message/tree/1.16.0"
             },
             "time": "2023-05-17T06:43:38+00:00"
-        },
-        {
-            "name": "php-http/multipart-stream-builder",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/multipart-stream-builder.git",
-                "reference": "f5938fd135d9fa442cc297dc98481805acfe2b6a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/multipart-stream-builder/zipball/f5938fd135d9fa442cc297dc98481805acfe2b6a",
-                "reference": "f5938fd135d9fa442cc297dc98481805acfe2b6a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0",
-                "php-http/discovery": "^1.15",
-                "psr/http-factory-implementation": "^1.0"
-            },
-            "require-dev": {
-                "nyholm/psr7": "^1.0",
-                "php-http/message": "^1.5",
-                "php-http/message-factory": "^1.0.2",
-                "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Http\\Message\\MultipartStream\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tobias Nyholm",
-                    "email": "tobias.nyholm@gmail.com"
-                }
-            ],
-            "description": "A builder class that help you create a multipart stream",
-            "homepage": "http://php-http.org",
-            "keywords": [
-                "factory",
-                "http",
-                "message",
-                "multipart stream",
-                "stream"
-            ],
-            "support": {
-                "issues": "https://github.com/php-http/multipart-stream-builder/issues",
-                "source": "https://github.com/php-http/multipart-stream-builder/tree/1.3.0"
-            },
-            "time": "2023-04-28T14:10:22+00:00"
         },
         {
             "name": "php-http/promise",
@@ -1503,16 +1447,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.17.0",
+            "version": "v3.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "3f0ed862f22386c55a767461ef5083bddceeed79"
+                "reference": "b123395c9fa3a70801f816f13606c0f3a7ada8df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/3f0ed862f22386c55a767461ef5083bddceeed79",
-                "reference": "3f0ed862f22386c55a767461ef5083bddceeed79",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/b123395c9fa3a70801f816f13606c0f3a7ada8df",
+                "reference": "b123395c9fa3a70801f816f13606c0f3a7ada8df",
                 "shasum": ""
             },
             "require": {
@@ -1587,7 +1531,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.17.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.18.0"
             },
             "funding": [
                 {
@@ -1595,7 +1539,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-22T19:59:32+00:00"
+            "time": "2023-06-18T22:25:45+00:00"
         },
         {
             "name": "myclabs/deep-copy",

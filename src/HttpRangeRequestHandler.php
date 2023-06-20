@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Lochmueller\HttpRange;
 
-use Http\Message\MultipartStream\MultipartStreamBuilder;
+use Lochmueller\HttpRange\Stream\MultipartStream;
 use Lochmueller\HttpRange\Stream\RangeWrapperStream;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -47,29 +46,26 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
             if (1 === $ranges->count()) {
                 /** @var UnitRangeInterface $rangeValue */
                 $rangeValue = $ranges->first();
+                $rangeEnd = $rangeValue->getStart() + $rangeValue->getLength();
 
-                return $response->withHeader('Content-Range', 'bytes '.sprintf('%s-%s/%s', $rangeValue->getStart(), $rangeValue->getLength(), $this->stream->getSize()))
+                return $response->withHeader('Content-Range', 'bytes '.sprintf('%s-%s/%s', $rangeValue->getStart(), $rangeEnd, $this->stream->getSize()))
                     ->withHeader('Content-Length', $rangeValue->getLength())
                     ->withBody(new RangeWrapperStream($this->stream, $rangeValue->getStart(), $rangeValue->getLength()));
             } elseif ($ranges->count() > 1) {
-                $builder = new MultipartStreamBuilder(new Psr17Factory());
+                $stream = new MultipartStream();
 
                 foreach ($ranges as $rangeValue) {
-                    /** @var UnitRangeInterface $rangeValue */
-                    $stream = new RangeWrapperStream($this->stream, $rangeValue->getStart(), $rangeValue->getLength());
-                    $builder->addData(
-                        $stream,
+                    $rangeEnd = $rangeValue->getStart() + $rangeValue->getLength();
+                    $stream->addStream(
+                        new RangeWrapperStream($this->stream, $rangeValue->getStart(), $rangeValue->getLength()),
                         [
-                            'Content-Range' => 'bytes '.sprintf('%s-%s/%s', $rangeValue->getStart(), $rangeValue->getLength(), $this->stream->getSize()),
-                            'Content-Length' => $stream->getSize(),
+                            'Content-Range' => 'bytes '.sprintf('%s-%s/%s', $rangeValue->getStart(), $rangeEnd, $this->stream->getSize()),
                         ]
                     );
                 }
 
-                $response->withHeader('Content-Type', 'multipart/byteranges; boundary='.$builder->getBoundary())
-                    ->withBody($builder->build());
-
-                return $response;
+                return $response->withHeader('Content-Type', 'multipart/byteranges; boundary='.$stream->getBoundary())
+                    ->withBody($stream);
             }
         } catch (NoRangeException $e) {
             // No range deliver complete file
