@@ -32,4 +32,13 @@ class ReadLocalFileStreamTest extends AbstractUnitTest
         $localFile->seek(10);
         self::assertEquals('n Text der', $localFile->read(10));
     }
+
+    public function testEofMethod(): void
+    {
+        $localFile = $this->getFixtureText();
+
+        self::assertEquals(0, $localFile->tell());
+        self::assertEquals('Ich bin ein Text der ein wenig in der Datei steht um zu prüfen, wie sich die verschiedenen Header verhalten.', $localFile->read(109));
+        self::assertTrue($localFile->eof());
+    }
 }

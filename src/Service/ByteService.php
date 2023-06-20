@@ -9,7 +9,7 @@ class ByteService
     public const DEFAULT_BLOCK_SIZE_IN_KILO_BYTE = 64;
 
     /**
-     * @return int[]
+     * @return non-empty-array<int, positive-int>
      */
     public function chuckBytesInBlocks(int $lengthInByte, int $blockSizeInKiloByte = self::DEFAULT_BLOCK_SIZE_IN_KILO_BYTE): array
     {
@@ -23,6 +23,7 @@ class ByteService
             $result[] = $rest;
         }
 
+        /* @phpstan-ignore-next-line */
         return $result;
     }
 }

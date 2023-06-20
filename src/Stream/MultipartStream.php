@@ -135,9 +135,6 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
         return (int) array_sum($sizes);
     }
 
-    /**
-     * @param int<0, max>|null $length
-     */
     public function emit(int $length = null): void
     {
         foreach ($this->streams as $data) {

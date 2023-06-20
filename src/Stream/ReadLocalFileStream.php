@@ -45,7 +45,7 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
 
     public function eof(): bool
     {
-        return $this->filePointer > $this->getSize();
+        return $this->filePointer >= $this->getSize();
     }
 
     public function isSeekable(): bool
@@ -89,7 +89,10 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
      */
     public function read(int $length): string
     {
-        return (string) file_get_contents($this->absoluteFileName, offset: $this->filePointer, length: $length);
+        $content = (string) file_get_contents($this->absoluteFileName, offset: $this->filePointer, length: $length);
+        $this->filePointer += $length;
+
+        return $content;
     }
 
     public function getContents(): string
@@ -102,11 +105,6 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
         return null;
     }
 
-    /**
-     * @param int<0, max>|null $length
-     *
-     * @throws LocalFileNotReadableException
-     */
     public function emit(int $length = null): void
     {
         if (null === $length) {
@@ -123,12 +121,13 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
         $byteService = new ByteService();
         $selectionBlocks = $byteService->chuckBytesInBlocks($length);
 
-        for ($i = 0; !$this->eof(); ++$i) {
-            /** @var int<0, max> $internalLength */
-            $internalLength = $selectionBlocks[$i];
-            echo fread($fp, $internalLength);
-            $this->filePointer += $internalLength;
+        foreach ($selectionBlocks as $block) {
+            echo fread($fp, $block);
+            $this->filePointer += $block;
             flush();
+            if ($this->eof()) {
+                break;
+            }
         }
         fclose($fp);
     }
