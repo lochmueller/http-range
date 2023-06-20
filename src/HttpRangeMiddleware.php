@@ -30,7 +30,7 @@ class HttpRangeMiddleware implements MiddlewareInterface
             $response = $response->withHeader($key, $value);
         }
 
-        return $response->withBody($internalResponse->getBody());
+        return $response->withBody($internalResponse->getBody())->withStatus($internalResponse->getStatusCode());
     }
 
     protected function isValidIfRangeCondition(ServerRequestInterface $request, ResponseInterface $response): bool
