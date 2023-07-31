@@ -57,6 +57,29 @@ class HttpRangeMiddlewareTest extends AbstractUnitTest
         self::assertEquals(95, \strlen($result->getBody()->getContents()));
     }
 
+    public function testMiddlewareWithFullRange(): void
+    {
+        $request = new ServerRequest('GET', '/', [
+            'Range' => 'bytes=0-',
+        ]);
+
+        $handler = $this->createMock(RequestHandlerInterface::class);
+        $handler->expects($this->once())
+            ->method('handle')
+            ->willReturnCallback(function () {
+                $response = new Response();
+
+                return $response->withBody($this->getFixtureText());
+            });
+
+        $middleware = new HttpRangeMiddleware(new Psr17Factory());
+        $result = $middleware->process($request, $handler);
+
+        self::assertTrue($result->hasHeader('Content-Range'));
+        self::assertEquals('bytes 0-108/109', $result->getHeaderLine('Content-Range'));
+        self::assertEquals(109, \strlen($result->getBody()->getContents()));
+    }
+
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
      *
