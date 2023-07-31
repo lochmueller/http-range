@@ -131,6 +131,6 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
 
     public function getContentRangeHeader(): string
     {
-        return 'bytes '.sprintf('%s-%s/%s', $this->start, $this->start + $this->length, $this->stream->getSize());
+        return 'bytes '.sprintf('%s-%s/%s', $this->start, $this->start + $this->length - 1, $this->stream->getSize());
     }
 }
