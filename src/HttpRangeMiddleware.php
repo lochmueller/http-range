@@ -26,7 +26,7 @@ class HttpRangeMiddleware implements MiddlewareInterface
         $response = $handler->handle($request);
 
         if ($request->hasHeader(IfRangeHeader::NAME) && !$this->isValidIfRangeCondition($request, $response)) {
-            $request->withoutHeader(RangeHeader::NAME);
+            $request = $request->withoutHeader(RangeHeader::NAME);
         }
 
         $handler = new HttpRangeRequestHandler($response->getBody(), $this->responseFactory);
