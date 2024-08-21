@@ -30,9 +30,7 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         return substr($content, $this->start, $this->length);
     }
 
-    public function close(): void
-    {
-    }
+    public function close(): void {}
 
     public function detach()
     {
@@ -98,7 +96,7 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         return (string) $this;
     }
 
-    public function getMetadata(string $key = null)
+    public function getMetadata(?string $key = null)
     {
         return null;
     }
@@ -108,7 +106,7 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         return $this->length + $this->start;
     }
 
-    public function emit(int $length = null): void
+    public function emit(?int $length = null): void
     {
         if ($this->stream instanceof EmitStreamInterface) {
             $this->stream->emit($length);
@@ -131,6 +129,6 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
 
     public function getContentRangeHeader(): string
     {
-        return 'bytes '.sprintf('%s-%s/%s', $this->start, $this->start + $this->length - 1, $this->stream->getSize());
+        return 'bytes ' . \sprintf('%s-%s/%s', $this->start, $this->start + $this->length - 1, $this->stream->getSize());
     }
 }

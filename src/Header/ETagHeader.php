@@ -10,9 +10,7 @@ class ETagHeader implements HeaderInterace
 
     protected const REGEX = '/\x57\x2f\"[\x21\x23-\x7e]{1,}[?=\"]/';
 
-    public function __construct(protected string $content)
-    {
-    }
+    public function __construct(protected string $content) {}
 
     public function valid(): bool
     {

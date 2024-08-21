@@ -20,8 +20,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
     public function __construct(
         protected StreamInterface $stream,
         protected ResponseFactoryInterface $responseFactory,
-    ) {
-    }
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -70,7 +69,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
             );
         }
 
-        return $response->withHeader('Content-Type', 'multipart/byteranges; boundary='.$stream->getBoundary())
+        return $response->withHeader('Content-Type', 'multipart/byteranges; boundary=' . $stream->getBoundary())
             ->withBody($stream);
     }
 }

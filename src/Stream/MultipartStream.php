@@ -13,13 +13,9 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
     /** @phpstan-ignore-next-line */
     protected array $streams = [];
 
-    public function __construct(protected ?string $boundary = null)
-    {
-    }
+    public function __construct(protected ?string $boundary = null) {}
 
-    public function close(): void
-    {
-    }
+    public function close(): void {}
 
     /**
      * @param array<string, string> $headers
@@ -67,13 +63,9 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
         return false;
     }
 
-    public function seek(int $offset, int $whence = \SEEK_SET): void
-    {
-    }
+    public function seek(int $offset, int $whence = \SEEK_SET): void {}
 
-    public function rewind(): void
-    {
-    }
+    public function rewind(): void {}
 
     public function isWritable(): bool
     {
@@ -100,7 +92,7 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
         return (string) $this;
     }
 
-    public function getMetadata(string $key = null)
+    public function getMetadata(?string $key = null)
     {
         return null;
     }
@@ -112,7 +104,7 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
     {
         $str = '';
         foreach ($headers as $key => $value) {
-            $str .= sprintf("%s: %s\r\n", $key, $value);
+            $str .= \sprintf("%s: %s\r\n", $key, $value);
         }
 
         return $str;
@@ -135,10 +127,10 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
         return (int) array_sum($sizes);
     }
 
-    public function emit(int $length = null): void
+    public function emit(?int $length = null): void
     {
         foreach ($this->streams as $data) {
-            echo "--{$this->getBoundary()}\r\n".$this->getHeaders($data['headers'])."\r\n";
+            echo "--{$this->getBoundary()}\r\n" . $this->getHeaders($data['headers']) . "\r\n";
             if ($data['stream'] instanceof EmitStreamInterface) {
                 $data['stream']->emit();
             } else {
@@ -153,7 +145,7 @@ class MultipartStream implements StreamInterface, EmitStreamInterface
     {
         $output = '';
         foreach ($this->streams as $data) {
-            $output .= "--{$this->getBoundary()}\r\n".$this->getHeaders($data['headers'])."\r\n";
+            $output .= "--{$this->getBoundary()}\r\n" . $this->getHeaders($data['headers']) . "\r\n";
             if ($inclStreams) {
                 $output .= (string) $data['stream'];
             }

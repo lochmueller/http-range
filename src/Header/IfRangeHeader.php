@@ -8,9 +8,7 @@ class IfRangeHeader implements HeaderInterace
 {
     public const NAME = 'If-Range';
 
-    public function __construct(protected string $content)
-    {
-    }
+    public function __construct(protected string $content) {}
 
     public function valid(): bool
     {

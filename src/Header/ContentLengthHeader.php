@@ -8,9 +8,7 @@ class ContentLengthHeader implements HeaderInterace
 {
     public const NAME = 'Content-Length';
 
-    public function __construct(protected string $content)
-    {
-    }
+    public function __construct(protected string $content) {}
 
     public function valid(): bool
     {

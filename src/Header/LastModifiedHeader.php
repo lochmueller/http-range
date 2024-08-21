@@ -8,9 +8,7 @@ class LastModifiedHeader implements HeaderInterace
 {
     public const NAME = 'Last-Modified';
 
-    public function __construct(protected string $content)
-    {
-    }
+    public function __construct(protected string $content) {}
 
     public function valid(): bool
     {

@@ -14,5 +14,5 @@ interface EmitStreamInterface extends StreamInterface
      *
      * @param positive-int|null $length
      */
-    public function emit(int $length = null): void;
+    public function emit(?int $length = null): void;
 }

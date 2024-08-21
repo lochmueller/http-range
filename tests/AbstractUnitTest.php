@@ -11,21 +11,21 @@ abstract class AbstractUnitTest extends TestCase
 {
     protected function getFixtureImage(): ReadLocalFileStream
     {
-        return new ReadLocalFileStream($this->getAbsoluteFixturesPath().'222-200x300.jpg');
+        return new ReadLocalFileStream($this->getAbsoluteFixturesPath() . '222-200x300.jpg');
     }
 
     protected function getFixtureText(): ReadLocalFileStream
     {
-        return new ReadLocalFileStream($this->getAbsoluteFixturesPath().'test-text.txt');
+        return new ReadLocalFileStream($this->getAbsoluteFixturesPath() . 'test-text.txt');
     }
 
     protected function getFixtureVideo(): ReadLocalFileStream
     {
-        return new ReadLocalFileStream($this->getAbsoluteFixturesPath().'hugeVideo.mp4');
+        return new ReadLocalFileStream($this->getAbsoluteFixturesPath() . 'hugeVideo.mp4');
     }
 
     private function getAbsoluteFixturesPath(): string
     {
-        return __DIR__.'/fixtures/';
+        return __DIR__ . '/fixtures/';
     }
 }

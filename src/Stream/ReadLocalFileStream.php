@@ -13,18 +13,14 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
 {
     protected int $filePointer = 0;
 
-    public function __construct(protected string $absoluteFileName)
-    {
-    }
+    public function __construct(protected string $absoluteFileName) {}
 
     public function __toString(): string
     {
         return (string) file_get_contents($this->absoluteFileName);
     }
 
-    public function close(): void
-    {
-    }
+    public function close(): void {}
 
     public function detach()
     {
@@ -100,12 +96,12 @@ class ReadLocalFileStream implements StreamInterface, EmitStreamInterface
         return (string) $this;
     }
 
-    public function getMetadata(string $key = null)
+    public function getMetadata(?string $key = null)
     {
         return null;
     }
 
-    public function emit(int $length = null): void
+    public function emit(?int $length = null): void
     {
         if (null === $length) {
             $length = $this->getSize() - $this->tell();

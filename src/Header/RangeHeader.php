@@ -17,9 +17,7 @@ class RangeHeader implements HeaderInterace
 
     protected int $totalSize;
 
-    public function __construct(protected string $content)
-    {
-    }
+    public function __construct(protected string $content) {}
 
     public function setRequestAndTotalSize(RequestInterface $request, int $totalSize): void
     {

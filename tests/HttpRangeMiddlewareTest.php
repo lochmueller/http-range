@@ -80,11 +80,6 @@ class HttpRangeMiddlewareTest extends AbstractUnitTest
         self::assertEquals(109, \strlen($result->getBody()->getContents()));
     }
 
-    /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
-     *
-     * @large
-     */
     public function testMemoryUsageOfHugeFiles(): void
     {
         $this->markTestSkipped('Skip, because this test output content');
