@@ -51,7 +51,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
 
             /** @var UnitRangeInterface $rangeValue */
             $rangeValue = $ranges->first();
-            $innerStream = new RangeWrapperStream($this->stream, $rangeValue->getStart(), $rangeValue->getLength());
+            $innerStream = new RangeWrapperStream($this->stream, (int) $rangeValue->getStart(), (int) $rangeValue->getLength());
 
             return $response->withHeader('Content-Range', $innerStream->getContentRangeHeader())
                 ->withHeader(ContentLengthHeader::NAME, (string) $innerStream->getSize())
@@ -62,7 +62,7 @@ class HttpRangeRequestHandler implements RequestHandlerInterface
         $stream = new MultipartStream();
 
         foreach ($ranges as $rangeValue) {
-            $innerStream = new RangeWrapperStream($this->stream, $rangeValue->getStart(), $rangeValue->getLength());
+            $innerStream = new RangeWrapperStream($this->stream, (int) $rangeValue->getStart(), (int) $rangeValue->getLength());
             $stream->addStream(
                 $innerStream,
                 ['Content-Range' => $innerStream->getContentRangeHeader()]

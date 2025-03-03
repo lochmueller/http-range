@@ -67,7 +67,7 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         $this->seek(0);
     }
 
-    public function isWritable()
+    public function isWritable(): bool
     {
         return false;
     }
@@ -77,7 +77,7 @@ class RangeWrapperStream implements StreamInterface, EmitStreamInterface
         throw new StreamNotWritableException();
     }
 
-    public function isReadable()
+    public function isReadable(): bool
     {
         return $this->stream->isReadable();
     }

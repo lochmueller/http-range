@@ -24,7 +24,7 @@
     "psr/http-server-middleware": "^1.0",
     "psr/http-factory": "^1.0",
     "psr/http-factory-implementation": "*",
-    "ramsey/http-range": "^1.1"
+    "ramsey/http-range": "^2.0"
   },
   "require-dev": {
     "nyholm/psr7": "^1.8",
